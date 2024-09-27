@@ -13,17 +13,19 @@ func startRepl() {
 	for {
 		fmt.Print("Pokedex > ")
 		sc.Scan()
-		text := sc.Text()
-		cleaned := cleanInput(text)
-		if len(cleaned) == 0 {
+
+		words := cleanInput(sc.Text())
+		if len(words) == 0 {
 			continue
 		}
-		cmdName := cleaned[0]	
+
+		cmdName := words[0]	
 		cmd, ok := commands[cmdName]
 		if !ok {
 			fmt.Println("Unknown command. Type 'help' for a list of commands.")
 			continue
 		}
+		
 		err := cmd.callback()
 		if err != nil {
 			fmt.Printf("Error executing command: %s\n", err)
